@@ -2,23 +2,24 @@ package com.redis_repo.crud.service;
 
 import com.redis_repo.crud.entity.Customer;
 import com.redis_repo.crud.repository.CustomerRepository;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.anyString;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.anyString;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class CustomerServiceTests {
@@ -52,8 +53,9 @@ public class CustomerServiceTests {
         // Act
         Iterable<Customer> getAllCustomers = service.getAll();
         // Assert
-        assertNotNull(customers);
-        assertThat(customers)
+        assertNotNull(getAllCustomers);
+        assertThat(getAllCustomers)
+            .isNotEmpty()
             .hasSize(2)
             .contains(twoCustomer)
             .doesNotContain(oneCustomer)
