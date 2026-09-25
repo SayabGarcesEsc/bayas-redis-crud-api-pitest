@@ -4,6 +4,7 @@ import com.redis_repo.crud.entity.Customer;
 import com.redis_repo.crud.repository.CustomerRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -19,6 +20,7 @@ import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.anyString;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -78,4 +80,38 @@ public class CustomerServiceTests {
             .isEqualToComparingFieldByFieldRecursively(optionalCustomer.get());
         verify(repo, times(1)).findById(anyString());
     }
-}
+    @Test
+    void updateTest() {
+        // Arrange
+        String customerId = "customer-1";
+        Customer existing = new Customer(customerId, "One Customer Name", 1111111111L, "onecustomer@testera.com");
+        Customer updateRequest = new Customer(customerId, "Eleven Customer Name", 1100000000L, "elevencustomer@testera.com");
+        when(repo.findById(customerId)).thenReturn(Optional.of(existing));
+        // Return the object passed to save()
+        when(repo.save(any(Customer.class)))
+                .thenAnswer(invocation -> invocation.getArgument(0));
+        //when(repo.save(any(Customer.class))).thenReturn(updateRequest);
+        // Act
+        Customer result = service.update(customerId, updateRequest);
+        // Assert
+        ArgumentCaptor<Customer> customerCaptor = ArgumentCaptor.forClass(Customer.class);
+        verify(repo).save(customerCaptor.capture());
+        Customer savedCustomer = customerCaptor.getValue();
+        assertNotNull(result);
+        assertThat(result)
+            .isEqualTo(updateRequest);
+        assertEquals("Eleven Customer Name", savedCustomer.getName());
+        assertEquals(1100000000L, savedCustomer.getPhone());
+        assertEquals("elevencustomer@testera.com", savedCustomer.getEmail());
+    }
+    @Test 
+    void deleteTest() {
+        // Arrange
+        String customerId = "customer-123";
+        // Act
+        service.delete(customerId);
+        // Assert
+        verify(repo).deleteById(customerId);
+        verifyNoMoreInteractions(repo);
+    }
+}   
