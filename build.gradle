@@ -29,6 +29,7 @@ dependencies {
 	testCompileOnly 'org.projectlombok:lombok'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 	testAnnotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.assertj:assertj-core:3.25.1'
 }
 
 test {
@@ -41,7 +42,7 @@ test {
 }
 
 pitest {
-	targetClasses = ['com.redis_repo.crud.service.*']
+	targetClasses = ['com.redis_repo.crud.*']
 	outputFormats = ['HTML']
 	timestampedReports = false
 	junit5PluginVersion = '1.2.3'

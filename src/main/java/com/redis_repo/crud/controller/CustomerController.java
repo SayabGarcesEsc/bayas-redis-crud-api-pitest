@@ -12,9 +12,24 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class CustomerController {
     private final CustomerService service;
-    @PostMapping public Customer create(@RequestBody Customer c) { return service.addCustomer(c); }
-    @GetMapping public Iterable<Customer> all() { return service.getAll(); }
-    @GetMapping("/{id}") public Optional<Customer> one(@PathVariable String id) { return service.getById(id); }
-    @PutMapping("/{id}") public Customer update(@PathVariable String id, @RequestBody Customer c) { return service.update(id, c); }
-    @DeleteMapping("/{id}") public void delete(@PathVariable String id) { service.delete(id); }
+    @PostMapping 
+    public Customer create(@RequestBody Customer c) { 
+        return service.addCustomer(c); 
+    }
+    @GetMapping 
+    public Iterable<Customer> all() { 
+        return service.getAll(); 
+    }
+    @GetMapping("/{id}") 
+    public Optional<Customer> one(@PathVariable String id) { 
+        return service.getById(id); 
+    }
+    @PutMapping("/{id}") 
+    public Customer update(@PathVariable String id, @RequestBody Customer c) { 
+        return service.update(id, c); 
+    }
+    @DeleteMapping("/{id}") 
+    public void delete(@PathVariable String id) { 
+        service.delete(id); 
+    }
 }

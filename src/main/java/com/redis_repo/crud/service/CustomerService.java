@@ -11,9 +11,15 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class CustomerService {
     private final CustomerRepository repo;
-    public Customer addCustomer(Customer c) { return repo.save(c); }
-    public Iterable<Customer> getAll() { return repo.findAll(); }
-    public Optional<Customer> getById(String id) { return repo.findById(id); }
+    public Customer addCustomer(Customer c) { 
+        return repo.save(c); 
+    }
+    public Iterable<Customer> getAll() { 
+        return repo.findAll(); 
+    }
+    public Optional<Customer> getById(String id) { 
+        return repo.findById(id); 
+    }
     public Customer update(String id, Customer c) {
         return repo.findById(id).map(existing -> {
             existing.setName(c.getName());
@@ -22,5 +28,7 @@ public class CustomerService {
             return repo.save(existing);
         }).orElse(null);
     }
-    public void delete(String id) { repo.deleteById(id); }
+    public void delete(String id) { 
+        repo.deleteById(id); 
+    }
 }
